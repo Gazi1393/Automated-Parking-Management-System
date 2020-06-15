@@ -1,0 +1,186 @@
+from tkinter import *
+import mysql.connector as mc
+
+def searchdb():
+    screen6.destroy()
+    screen5 = Tk()
+    screen5.geometry("1086x1024")
+    screen5.title("Admin Panel/User/Search Results")
+
+    try:
+        conn = mc.connect(host='localhost', user='root', password='', db='car_park_master')
+
+    except mc.Error as e:
+        print("Error %d: %s" % (e.args[0], e.args[1]))
+        sys.exit(1)
+
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM user")
+    record = cursor.fetchall()
+    b=20
+    for x in record:
+        if(searchx == x[0]):
+            print(x[0])
+            Label(screen6, text="ID", font=("Calibri", 8)).place(x=20, y=5)
+            Label(screen6, text=(x[0]), font=("Calibri", 8)).place(x=20, y=b)
+            b = b + 20
+
+
+def permanent_table():
+    screen4.destroy()
+    global screen6
+    screen6 = Tk()
+    screen6.geometry("1086x1024")
+    screen6.title("Admin Panel/User Table")
+    Button(screen6, text="Back", height="2", width="9", command=back).place(x=1000, y=900)
+    try:
+        conn = mc.connect(host='localhost', user='root', password='', db='car_park_master')
+
+    except mc.Error as e:
+        print("Error %d: %s" % (e.args[0], e.args[1]))
+        sys.exit(1)
+
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM permanent_user_info")
+    record = cursor.fetchall()
+    b = 20
+
+    for x in record:
+        Label(screen6, text="ID", font=("Calibri", 8)).place(x=20, y=5)
+        Label(screen6, text=(x[0]), font=("Calibri", 8)).place(x=20, y=b)
+        b = b + 20
+
+    b = 20
+    for x in record:
+        Label(screen6, text="Name", font=("Calibri", 8)).place(x=40, y=5)
+        Label(screen6, text=(x[1]), font=("Calibri", 8)).place(x=40, y=b)
+        b = b + 20
+    b = 20
+    for x in record:
+        Label(screen6, text="Address", font=("Calibri", 8)).place(x=200, y=5)
+        Label(screen6, text=(x[2]), font=("Calibri", 8)).place(x=200, y=b)
+        b = b + 20
+    b = 20
+    for x in record:
+        Label(screen6, text="Phone", font=("Calibri", 8)).place(x=400, y=5)
+        Label(screen6, text=(x[3]), font=("Calibri", 8)).place(x=400, y=b)
+        b = b + 20
+    b = 20
+    for x in record:
+        Label(screen6, text="Car Plate", font=("Calibri", 8)).place(x=600, y=5)
+        Label(screen6, text=(x[4]), font=("Calibri", 8)).place(x=600, y=b)
+        b = b + 20
+    b = 20
+    for x in record:
+        Label(screen6, text="Due", font=("Calibri", 8)).place(x=800, y=5)
+        Label(screen6, text=(x[5]), font=("Calibri", 8)).place(x=800, y=b)
+        b = b + 20
+    cursor.close()
+    conn.close()
+
+def user_table():
+
+
+    screen4.destroy()
+
+    global screen6
+    global searchx
+
+
+
+
+
+
+    screen6 = Tk()
+    screen6.geometry("1086x1024")
+    screen6.title("Admin Panel/User Table")
+    Button(screen6,text="Back", height="2", width="9", command=back).place(x=1000, y=900)
+    searchx = StringVar()
+    Entry(screen6, textvariable=searchx).place(x=500, y=900)
+    Button(screen6,text="Search",height="2",width="9",command=searchdb).place(x=700,y=900)
+
+
+
+    try:
+        conn = mc.connect(host='localhost', user='root', password='', db='car_park_master')
+
+    except mc.Error as e:
+        print("Error %d: %s" % (e.args[0], e.args[1]))
+        sys.exit(1)
+
+    cursor=conn.cursor()
+    cursor.execute("SELECT * FROM user")
+    record = cursor.fetchall()
+    b=20
+
+    for x in record:
+        Label(screen6,text="ID",font=("Calibri",8)).place(x=20,y=5)
+        Label(screen6,text=(x[0]),font=("Calibri",8)).place(x=20,y=b)
+        b=b+20
+
+    b=20
+    for x in record:
+        Label(screen6, text="Entry_time", font=("Calibri", 8)).place(x=40, y=5)
+        Label(screen6, text=(x[1]), font=("Calibri", 8)).place(x=40, y=b)
+        b = b + 20
+    b = 20
+    for x in record:
+        Label(screen6, text="Exit_time", font=("Calibri", 8)).place(x=200, y=5)
+        Label(screen6, text=(x[2]), font=("Calibri", 8)).place(x=200, y=b)
+        b = b + 20
+    b = 20
+    for x in record:
+        Label(screen6, text="Type", font=("Calibri", 8)).place(x=400, y=5)
+        Label(screen6, text=(x[3]), font=("Calibri", 8)).place(x=400, y=b)
+        b = b + 20
+    b = 20
+    for x in record:
+        Label(screen6, text="Photo", font=("Calibri", 8)).place(x=600, y=5)
+        Label(screen6, text=(x[4]), font=("Calibri", 8)).place(x=600, y=b)
+        b = b + 20
+    b = 20
+    for x in record:
+        Label(screen6, text="Bill", font=("Calibri", 8)).place(x=800, y=5)
+        Label(screen6, text=(x[5]), font=("Calibri", 8)).place(x=800, y=b)
+        b = b + 20
+    cursor.close()
+    conn.close()
+
+
+
+def back():
+    screen6.destroy()
+    main_screen()
+
+
+
+
+def main_screen():
+
+
+
+
+    global screen4
+    screen4 = Tk()
+    screen4.geometry("1086x1024")
+    screen4.title("Admin Panel/Database")
+    Label(screen4,text="Please Select Database", font=("Calibri", 16)).place(x=100, y=20)
+
+
+    #global searchx
+
+
+    #searchx = StringVar()
+
+    #Entry(screen4,textvariable=searchx).place(x=100, y=50)
+
+
+    Button(screen4,text="User Table", height="2", width="15", command=user_table).place(x=100, y=200)
+    Button(screen4, text="Permanent User", height="2", width="15", command=permanent_table).place(x=200, y=200)
+
+
+
+    screen4.mainloop()
+
+
+main_screen()
